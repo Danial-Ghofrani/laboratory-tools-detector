@@ -35,13 +35,13 @@ def data_reindexing():
 
 
 
-label_dir = r"D:\programming\laboratory tools detector\dataset\flask\test\labels"
-output_dir = r"D:\programming\laboratory tools detector\dataset\flask\test\annotated labels"
+label_dir = r"D:\programming\laboratory tools detector\dataset\flask\valid\labels"
+output_dir = r"D:\programming\laboratory tools detector\dataset\flask\valid\annotated labels"
 # Mapping of old class IDs to new labels
 label_map = {0: 11, 1: 12, 2: 13, 3: 14, 4: 15, 5: 16}
 #
 #
-# os.makedirs(output_dir, exist_ok=True)
+os.makedirs(output_dir, exist_ok=True)
 
 # Function to relabel a single file and save to output directory
 def relabel_file(file_path, output_path):
@@ -60,13 +60,13 @@ def relabel_file(file_path, output_path):
         f.writelines(new_lines)
 
 # Process all label files in the directory
-# for filename in os.listdir(label_dir):
-#     if filename.endswith(".txt"):
-#         file_path = os.path.join(label_dir, filename)
-#         output_path = os.path.join(output_dir, filename)
-#         relabel_file(file_path, output_path)
-#
-# print(f"Relabeling complete! Relabeled files saved to: {output_dir}")
+for filename in os.listdir(label_dir):
+    if filename.endswith(".txt"):
+        file_path = os.path.join(label_dir, filename)
+        output_path = os.path.join(output_dir, filename)
+        relabel_file(file_path, output_path)
+
+print(f"Relabeling complete! Relabeled files saved to: {output_dir}")
 
 
 def split_micropipette_data(train_images_dir, train_labels_dir,
@@ -74,6 +74,8 @@ def split_micropipette_data(train_images_dir, train_labels_dir,
                        test_images_dir, test_labels_dir,
                        micropipette_class_id = 10,
                        valid_split = 0.1, test_split = 0.1):
+    """the data for micropipette tip only contains train data so i want to give some of its train data to the test and valid folder!"""
+
     os.makedirs(valid_images_dir, exist_ok=True)
     os.makedirs(valid_labels_dir, exist_ok=True)
     os.makedirs(test_images_dir, exist_ok=True)
@@ -132,18 +134,17 @@ def split_micropipette_data(train_images_dir, train_labels_dir,
 
 
 
-    """the data for micropipette tip only contains train data so i want to give some of its train data to the test and valid folder!"""
 
 
 
-split_micropipette_data(
-    train_images_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\images",
-    train_labels_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\annotated_labels",
-    valid_images_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\valid\image",
-    valid_labels_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\valid\label",
-    test_images_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\test\image",
-    test_labels_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\test\label",
-    micropipette_class_id=10,  # Adjust as per your class ID
-    valid_split=0.1,          # 10% of data to validation
-    test_split=0.1            # 10% of data to test
-)
+# split_micropipette_data(
+#     train_images_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\images",
+#     train_labels_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\annotated_labels",
+#     valid_images_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\valid\image",
+#     valid_labels_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\valid\label",
+#     test_images_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\test\image",
+#     test_labels_dir=r"D:\programming\laboratory tools detector\dataset\micropipette tip\train\new_splitted_dataset\test\label",
+#     micropipette_class_id=10,  # Adjust as per your class ID
+#     valid_split=0.1,          # 10% of data to validation
+#     test_split=0.1            # 10% of data to test
+# )
